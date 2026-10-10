@@ -1,0 +1,11 @@
+{
+  "name": "queen-captivated-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Queen Captivated - marketing site, car rental app, homestay app and APIs",
+  "type": "module",
+  "engines": { "node": ">=20.19.0 <25" },
+  "scripts": {
+    "build": "node scripts/vercel-build.mjs"
+  }
+}

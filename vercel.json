@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "echo 'dependencies are installed by the build script'",
+  "buildCommand": "node scripts/vercel-build.mjs",
+  "outputDirectory": "frontend/.vercel-output",
+  "rewrites": [
+    { "source": "/car-rental", "destination": "/car-rental/index.html" },
+    { "source": "/car-rental/(.*)", "destination": "/car-rental/index.html" },
+    { "source": "/homestay", "destination": "/homestay/index.html" }
+  ]
+}

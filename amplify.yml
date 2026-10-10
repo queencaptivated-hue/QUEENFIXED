@@ -1,0 +1,13 @@
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        - BUILD_OUT_DIR=.amplify-output node scripts/vercel-build.mjs
+  artifacts:
+    baseDirectory: frontend/.amplify-output
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - frontend/car-rental/node_modules/**/*
