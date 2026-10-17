@@ -1,10 +1,53 @@
 import { Router } from "express";
 import { db } from "../db/index.js";
 import { v4 as uuid } from "uuid";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { requireAuth, requireRole } from "../middleware/auth.js";
 
 const router = Router();
 router.use(requireAuth, requireRole("super_admin"));
+
+// ── Super Admin login (mobile number + password) ─────────
+// Requires the CURRENT password, so a stolen browser session alone can't take over the account.
+router.put("/account", (req, res) => {
+  const { current_password, new_mobile, new_password } = req.body || {};
+  const me = db.prepare("SELECT * FROM users WHERE id = ? AND role = 'super_admin'").get(req.user.id);
+  if (!me) return res.status(404).json({ error: "Admin account not found." });
+  if (!current_password || !bcrypt.compareSync(String(current_password), me.password_hash || "")) {
+    return res.status(401).json({ error: "Current password is incorrect." });
+  }
+
+  const mobile = new_mobile === undefined || new_mobile === "" ? me.mobile : String(new_mobile).trim();
+  if (!/^\d{10}$/.test(mobile)) {
+    return res.status(400).json({ error: "Enter a valid 10-digit mobile number." });
+  }
+  if (mobile !== me.mobile) {
+    const taken = db.prepare("SELECT id FROM users WHERE mobile = ? AND id != ?").get(mobile, me.id);
+    if (taken) return res.status(409).json({ error: "That mobile number is already used by another account." });
+  }
+
+  let hash = me.password_hash;
+  if (new_password !== undefined && new_password !== "") {
+    if (String(new_password).length < 8) {
+      return res.status(400).json({ error: "New password must be at least 8 characters." });
+    }
+    hash = bcrypt.hashSync(String(new_password), 10);
+  }
+  if (mobile === me.mobile && hash === me.password_hash) {
+    return res.status(400).json({ error: "Nothing to change - enter a new mobile number and/or a new password." });
+  }
+
+  db.prepare("UPDATE users SET mobile = ?, password_hash = ? WHERE id = ?").run(mobile, hash, me.id);
+  const updated = db.prepare("SELECT * FROM users WHERE id = ?").get(me.id);
+  const token = jwt.sign(
+    { id: updated.id, role: updated.role, mobile: updated.mobile, name: updated.name },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRES_IN || "7d" }
+  );
+  const { password_hash, ...user } = updated;
+  res.json({ message: "Super Admin login updated.", token, user });
+});
 
 // ── Driver management ────────────────────────────────────
 router.get("/drivers", (req, res) => {

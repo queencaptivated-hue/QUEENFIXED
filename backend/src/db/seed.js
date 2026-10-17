@@ -46,4 +46,27 @@ if (!existingAdmin) {
   console.log("Seeded super admin -> mobile: 9999999999, password: Admin@123");
 }
 
+// ── Optional: set the Super Admin login from environment variables ─────
+// Handy on hosts that wipe the database on restart (e.g. Render free plan):
+//   ADMIN_MOBILE=<10 digits>   ADMIN_PASSWORD=<8+ characters>
+// When these are set they win on every start. When they are NOT set, nothing changes
+// (default stays 9999999999 / Admin@123, or whatever was changed in Settings).
+const envMobile = (process.env.ADMIN_MOBILE || "").trim();
+const envPassword = process.env.ADMIN_PASSWORD || "";
+if (envMobile || envPassword) {
+  const admin = db.prepare("SELECT * FROM users WHERE role = 'super_admin' LIMIT 1").get();
+  if (admin) {
+    if (envMobile && !/^\d{10}$/.test(envMobile)) {
+      console.warn("[seed] ADMIN_MOBILE must be exactly 10 digits - ignored.");
+    } else if (envPassword && envPassword.length < 8) {
+      console.warn("[seed] ADMIN_PASSWORD must be at least 8 characters - ignored.");
+    } else {
+      const mobile = envMobile || admin.mobile;
+      const hash = envPassword ? bcrypt.hashSync(envPassword, 10) : admin.password_hash;
+      db.prepare("UPDATE users SET mobile = ?, password_hash = ? WHERE id = ?").run(mobile, hash, admin.id);
+      console.log("[seed] Super admin login updated from environment variables.");
+    }
+  }
+}
+
 console.log("Seed complete.");
