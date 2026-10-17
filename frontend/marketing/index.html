@@ -615,13 +615,14 @@ footer{background:var(--secondary);border-top:1px solid var(--border);padding:64
 <div class="contact-detail"><span style="color:var(--primary)">📞</span><a href="tel:03870265003" style="color:var(--muted)">03870 265003</a></div>
 </div>
 </div>
-<form action="https://formspree.io/f/xpwzgkby" method="POST">
+<form id="contactForm" action="https://formspree.io/f/meaenjlw" method="POST" data-fallback-email="queencaptivated@gmail.com">
 <div class="form-group"><label>Full Name *</label><input type="text" name="name" placeholder="Your name" required maxlength="100"></div>
 <div class="form-group"><label>Email *</label><input type="email" name="email" placeholder="your@email.com" required></div>
 <div class="form-group"><label>Phone</label><input type="tel" name="phone" placeholder="+91 ..."></div>
 <div class="form-group"><label>Message *</label><textarea name="message" rows="5" placeholder="Tell us about your project or inquiry..." required maxlength="1000"></textarea></div>
 <input type="hidden" name="_subject" value="New contact from Queen Captivated website">
 <button type="submit" class="btn-gold btn-submit">✉️ Send Message</button>
+<p id="contactStatus" role="status" aria-live="polite" style="margin-top:12px;font-size:14px;display:none"></p>
 </form>
 </div>
 </div>
@@ -835,5 +836,30 @@ function declineCookies(){document.getElementById('cookieBanner').classList.remo
 </script>
 
 <script src="nostalgia.js" defer></script>
+<script>
+/* Enquiry form: sends to Formspree without leaving the page, shows a clear
+   message, and falls back to the visitor's email app if Formspree refuses. */
+(function(){
+  var f=document.getElementById('contactForm'); if(!f) return;
+  var st=document.getElementById('contactStatus'), btn=f.querySelector('button[type=submit]');
+  function say(t,ok){st.style.display='block';st.style.color=ok?'#7bd88f':'#ff8a7a';st.textContent=t;}
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var label=btn.textContent; btn.disabled=true; btn.textContent='Sending…'; st.style.display='none';
+    fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}})
+      .then(function(r){return r.json().catch(function(){return {};}).then(function(d){return {ok:r.ok,d:d};});})
+      .then(function(x){
+        if(x.ok){f.reset();say('Thank you! Your message has been sent. We will contact you soon.',true);}
+        else throw new Error((x.d&&x.d.error)||'rejected');
+      })
+      .catch(function(){
+        var m='Name: '+f.name.value+'\nPhone: '+f.phone.value+'\nEmail: '+f.email.value+'\n\n'+f.message.value;
+        say('Sorry, the form could not send right now. Opening your email app instead - or write to '+f.dataset.fallbackEmail+'.',false);
+        setTimeout(function(){location.href='mailto:'+f.dataset.fallbackEmail+'?subject='+encodeURIComponent('New contact from Queen Captivated website')+'&body='+encodeURIComponent(m);},1200);
+      })
+      .then(function(){btn.disabled=false;btn.textContent=label;});
+  });
+})();
+</script>
 </body>
 </html>
