@@ -28,3 +28,10 @@ Backend passwords were **not changed**: car-rental admin is still seeded as `999
 
 ## Nostalgic "Memory Lane" look
 Files: `frontend/marketing/nostalgia.css` + `nostalgia.js` (also copied into `frontend/car-rental/src/`). A switch (bottom-left) turns it on/off; it is skipped for visitors who prefer reduced motion.
+
+## Changing the Super Admin mobile number and password (car rental)
+- In the car rental app: sign in as Super Admin -> **Settings** -> **Super Admin login**. Enter the new 10-digit mobile number and/or a new password (8+ characters) and your **current** password, then **Update login**.
+- On Render's free plan the database resets on every restart, which also resets the login to the default. To make a new login permanent, add these environment variables to the car rental service on Render (Environment tab) and save:
+  - `ADMIN_MOBILE` = your 10-digit mobile number
+  - `ADMIN_PASSWORD` = your password (8+ characters)
+  When these are set they are applied on every start. If you leave them unset, nothing changes (default `9999999999` / `Admin@123`).
