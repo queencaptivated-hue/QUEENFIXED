@@ -134,7 +134,8 @@ html.qc-vintage.qc-site-marketing .hero-overlay {
   background: linear-gradient(180deg, rgba(25, 12, 0, .72), rgba(20, 10, 0, .62) 55%, rgba(16, 11, 7, .92));
 }
 html.qc-vintage.qc-site-marketing .section-header h2,
-html.qc-vintage.qc-site-marketing .hero-text h1 { text-shadow: 2px 2px 0 rgba(0, 0, 0, .35); }
+html.qc-vintage.qc-site-marketing .hero-text h1,
+html.qc-vintage.qc-site-marketing .hero-text h2 { text-shadow: 2px 2px 0 rgba(0, 0, 0, .35); }
 
 /* =====================================================================
    HOMESTAY APP (light) — cream paper + polaroid room cards
