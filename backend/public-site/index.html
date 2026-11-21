@@ -327,10 +327,20 @@ footer{background:var(--secondary);border-top:1px solid var(--border);padding:64
 .mobile-menu .m-dd-sub a{padding-left:44px;color:var(--fg)}
 
 /* ===== QC EVENTS & ENTERTAINMENT (additive; hidden unless html.qc-events-on) ===== */
-.qc-ev-link,#events{display:none}
-html.qc-events-on .nav-links .qc-ev-link{display:inline-block;max-width:210px;line-height:1.2;text-align:center;font-size:.72rem;letter-spacing:.02em;padding:6px 8px}
-html.qc-events-on .mobile-menu .qc-ev-link{display:block}
+.qc-ev-link,.mobile-menu .m-dd-btn.qc-ev-link,#events{display:none}
+html.qc-events-on .nav-links .qc-ev-link.nav-dd{display:flex}
+html.qc-events-on .mobile-menu .m-dd-btn.qc-ev-link{display:flex}
+html.qc-events-on .mobile-menu .m-dd-sub.qc-ev-link.open{display:block}
 html.qc-events-on #events{display:block}
+html.qc-events-on .nav-links{align-items:center}
+html.qc-events-on .nav-logo{flex:none;margin-right:20px}
+html.qc-events-on .nav-logo span,html.qc-events-on .nav-links>a,html.qc-events-on .nav-dd:not(.qc-ev-dd) .nav-dd-btn{white-space:nowrap}
+html.qc-events-on .qc-ev-dd .nav-dd-btn{white-space:normal;text-align:left;width:240px;line-height:1.2;font-size:.72rem;letter-spacing:.02em}
+.qc-ev-dd .nav-dd-btn svg{flex:none}
+.qc-ev-dd .nav-dd-menu{display:grid;grid-template-columns:1fr 1fr;gap:2px;min-width:540px}
+.qc-ev-dd .nav-dd-item strong{white-space:normal}
+.qc-ev-dd .qc-ev-all{grid-column:1/-1;border-bottom:1px solid var(--border);border-radius:8px 8px 0 0;margin-bottom:4px}
+@media(max-width:1339px){html.qc-events-on .nav-links{display:none}html.qc-events-on .hamburger{display:block}html.qc-events-on .mobile-menu.open{display:block}}
 #events{--ev-ink:#14090f;--ev-wine:#4a1230;--ev-paper:#f4e9d6;--ev-line:#c9b38a;position:relative;overflow:hidden;color:var(--fg);padding:88px 0 72px;background:radial-gradient(900px 420px at 50% -8%,rgba(232,184,106,.30),transparent 65%),linear-gradient(180deg,var(--ev-wine) 0%,var(--ev-ink) 70%)}
 #events::before{content:"";position:absolute;inset:0;pointer-events:none;background:conic-gradient(from 200deg at 50% -10%,transparent 0 6%,rgba(255,226,170,.10) 8% 10%,transparent 12% 20%,rgba(255,226,170,.07) 22% 24%,transparent 26% 74%,rgba(255,226,170,.07) 76% 78%,transparent 80% 88%,rgba(255,226,170,.10) 90% 92%,transparent 94%)}
 #events .container{position:relative;z-index:1}
@@ -439,14 +449,14 @@ html.qc-events-on #events{display:block}
 <span class="text-gradient-gold">Queen Captivated</span>
 </a>
 <div class="nav-links">
-<a href="#home">Home</a><div class="nav-dd"><button type="button" class="nav-dd-btn" aria-haspopup="true" aria-expanded="false">Products <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 3.5L5 7l3.5-3.5"/></svg></button><div class="nav-dd-menu" role="menu"><a class="nav-dd-item" role="menuitem" href="ai-products.html"><span class="nav-dd-ico" aria-hidden="true">✦</span><span><strong>AI Product</strong><small>Intelligent products, agents &amp; automation</small></span></a></div></div><a href="#events" class="qc-ev-link">EVENT MANAGEMENT &amp; ENTERTAINMENT MARKETPLACE</a><a href="#about">About</a><a href="#services">Services</a>
+<a href="#home">Home</a><div class="nav-dd"><button type="button" class="nav-dd-btn" aria-haspopup="true" aria-expanded="false">Products <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 3.5L5 7l3.5-3.5"/></svg></button><div class="nav-dd-menu" role="menu"><a class="nav-dd-item" role="menuitem" href="ai-products.html"><span class="nav-dd-ico" aria-hidden="true">✦</span><span><strong>AI Product</strong><small>Intelligent products, agents &amp; automation</small></span></a></div></div><div class="nav-dd qc-ev-link qc-ev-dd"><button type="button" class="nav-dd-btn" aria-haspopup="true" aria-expanded="false">EVENT MANAGEMENT &amp; ENTERTAINMENT MARKETPLACE <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 3.5L5 7l3.5-3.5"/></svg></button><div class="nav-dd-menu" role="menu"><a class="nav-dd-item qc-ev-all" role="menuitem" href="#events"><span class="nav-dd-ico" aria-hidden="true">✦</span><span><strong>Event Management &amp; Entertainment Marketplace</strong><small>Discover events, artists, equipment &amp; planning</small></span></a><a class="nav-dd-item" role="menuitem" href="events/explore?category=music-concerts"><span class="nav-dd-ico" aria-hidden="true">♫</span><span><strong>Music Concerts</strong></span></a><a class="nav-dd-item" role="menuitem" href="events/explore?category=cultural-festivals"><span class="nav-dd-ico" aria-hidden="true">✺</span><span><strong>Cultural Festivals</strong></span></a><a class="nav-dd-item" role="menuitem" href="events/explore?category=dance"><span class="nav-dd-ico" aria-hidden="true">❀</span><span><strong>Dance</strong></span></a><a class="nav-dd-item" role="menuitem" href="events/explore?category=sports"><span class="nav-dd-ico" aria-hidden="true">⚑</span><span><strong>Sports</strong></span></a><a class="nav-dd-item" role="menuitem" href="events/explore?category=weddings"><span class="nav-dd-ico" aria-hidden="true">♥</span><span><strong>Weddings</strong></span></a><a class="nav-dd-item" role="menuitem" href="events/explore?category=corporate"><span class="nav-dd-ico" aria-hidden="true">▤</span><span><strong>Corporate Events</strong></span></a><a class="nav-dd-item" role="menuitem" href="events/explore?category=parties"><span class="nav-dd-ico" aria-hidden="true">✧</span><span><strong>Parties</strong></span></a><a class="nav-dd-item" role="menuitem" href="events/explore?category=community"><span class="nav-dd-ico" aria-hidden="true">❖</span><span><strong>Community Events</strong></span></a></div></div><a href="#about">About</a><a href="#services">Services</a>
 <a href="#industries">Industries</a><a href="#why-us">Why Us</a><a href="#testimonials">Testimonials</a>
 <a href="#faq">FAQ</a><a href="#contact">Contact</a>
 </div>
 <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
 </div>
 <div class="mobile-menu" id="mobileMenu">
-<a href="#home" onclick="closeMenu()">Home</a><button type="button" class="m-dd-btn" aria-expanded="false" onclick="toggleMobileProducts(this)">Products <span aria-hidden="true">▾</span></button><div class="m-dd-sub"><a href="ai-products.html" onclick="closeMenu()">AI Product</a></div><a href="#events" class="qc-ev-link" onclick="closeMenu()">EVENT MANAGEMENT &amp; ENTERTAINMENT MARKETPLACE</a><a href="#about" onclick="closeMenu()">About</a>
+<a href="#home" onclick="closeMenu()">Home</a><button type="button" class="m-dd-btn" aria-expanded="false" onclick="toggleMobileProducts(this)">Products <span aria-hidden="true">▾</span></button><div class="m-dd-sub"><a href="ai-products.html" onclick="closeMenu()">AI Product</a></div><button type="button" class="m-dd-btn qc-ev-link" aria-expanded="false" onclick="toggleMobileProducts(this)">EVENT MANAGEMENT &amp; ENTERTAINMENT MARKETPLACE <span aria-hidden="true">▾</span></button><div class="m-dd-sub qc-ev-link"><a href="#events" onclick="closeMenu()">Event Management &amp; Entertainment Marketplace</a><a href="events/explore?category=music-concerts" onclick="closeMenu()">Music Concerts</a><a href="events/explore?category=cultural-festivals" onclick="closeMenu()">Cultural Festivals</a><a href="events/explore?category=dance" onclick="closeMenu()">Dance</a><a href="events/explore?category=sports" onclick="closeMenu()">Sports</a><a href="events/explore?category=weddings" onclick="closeMenu()">Weddings</a><a href="events/explore?category=corporate" onclick="closeMenu()">Corporate Events</a><a href="events/explore?category=parties" onclick="closeMenu()">Parties</a><a href="events/explore?category=community" onclick="closeMenu()">Community Events</a></div><a href="#about" onclick="closeMenu()">About</a>
 <a href="#services" onclick="closeMenu()">Services</a><a href="#industries" onclick="closeMenu()">Industries</a>
 <a href="#why-us" onclick="closeMenu()">Why Us</a><a href="#testimonials" onclick="closeMenu()">Testimonials</a>
 <a href="#faq" onclick="closeMenu()">FAQ</a><a href="#contact" onclick="closeMenu()">Contact</a>
@@ -631,6 +641,12 @@ html.qc-events-on #events{display:block}
 
 <!-- QC EVENTS & ENTERTAINMENT (new, independent of the hero above) -->
 <section id="events" aria-labelledby="evTitle">
+<script>(function(){var dd=document.querySelector('.qc-ev-dd');if(!dd)return;var btn=dd.querySelector('.nav-dd-btn');
+function set(o){dd.classList.toggle('open',o);btn.setAttribute('aria-expanded',o?'true':'false')}
+btn.addEventListener('click',function(e){e.stopPropagation();set(!dd.classList.contains('open'))});
+dd.addEventListener('mouseleave',function(){set(false)});
+document.addEventListener('click',function(e){if(!dd.contains(e.target))set(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)})})();</script>
 <div class="container">
 <div class="ev-brand">QUEEN CAPTIVATED</div>
 <h2 id="evTitle">EVENTS &amp; ENTERTAINMENT</h2>
@@ -645,7 +661,7 @@ html.qc-events-on #events{display:block}
 <div class="ev-stub"><button type="submit">Search events</button></div>
 </form>
 <div class="ev-cta"><a class="btn-gold" href="events/explore">Explore Events</a><a class="ev-ghost" href="events/publish">Publish Your Event</a></div>
-<nav class="ev-cats" aria-label="Popular event categories"><a href="events/explore?category=music-concerts">Music concerts</a><a href="events/explore?category=cultural-festivals">Cultural festivals</a><a href="events/explore?category=dance">Dance</a><a href="events/explore?category=sports">Sports</a><a href="events/explore?category=weddings">Weddings</a><a href="events/explore?category=corporate">Corporate</a><a href="events/explore?category=parties">Parties</a><a href="events/explore?category=community">Community</a></nav>
+<div class="ev-cats" role="navigation" aria-label="Popular event categories"><a href="events/explore?category=music-concerts">Music concerts</a><a href="events/explore?category=cultural-festivals">Cultural festivals</a><a href="events/explore?category=dance">Dance</a><a href="events/explore?category=sports">Sports</a><a href="events/explore?category=weddings">Weddings</a><a href="events/explore?category=corporate">Corporate</a><a href="events/explore?category=parties">Parties</a><a href="events/explore?category=community">Community</a></div>
 <div class="ev-rows">
 <div><h3>Featured events</h3><div class="ev-list" id="qcEvFeat"><div class="ev-empty">No featured events yet. <a href="events/publish">Publish yours</a> and it can appear here.</div></div></div>
 <div><h3>Upcoming events</h3><div class="ev-list" id="qcEvUp"><div class="ev-empty">Upcoming events will be listed here once organisers publish them.</div></div></div>
