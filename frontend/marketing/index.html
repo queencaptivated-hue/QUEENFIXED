@@ -131,6 +131,8 @@
   ]
 }
 </script>
+<meta name="qc-events" content="off"><meta name="qc-events-api" content="">
+<script>(function(){var m=document.querySelector('meta[name="qc-events"]');if((m&&m.content==="on")||/[?&]events=preview/.test(location.search))document.documentElement.classList.add("qc-events-on")})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -150,14 +152,6 @@ body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-heig
 h1,h2,h3,h4,h5,h6{font-family:var(--font-display)}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
-.social{display:flex;gap:12px;margin-top:18px}
-.social a{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;color:var(--primary);transition:background .2s,color .2s,transform .2s,border-color .2s}
-.social a:hover,.social a:focus-visible{transform:translateY(-2px);background:rgba(255,255,255,.06)}
-.social svg{width:18px;height:18px;fill:currentColor}
-.social a.fb{color:#1877F2}.social a.fb:hover,.social a.fb:focus-visible{border-color:#1877F2}
-.social a.li{color:#0A66C2}.social a.li:hover,.social a.li:focus-visible{border-color:#0A66C2}
-.social a.tw{color:#fff}.social a.tw:hover,.social a.tw:focus-visible{border-color:#fff}
-.social a.ig svg{fill:url(#igGrad)}.social a.ig:hover,.social a.ig:focus-visible{border-color:#E4405F}
 .container{max-width:1200px;margin:0 auto;padding:0 16px}
 .text-gradient-gold{background:var(--gold-gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .bg-gold{background:var(--gold-gradient)}
@@ -332,6 +326,44 @@ footer{background:var(--secondary);border-top:1px solid var(--border);padding:64
 .mobile-menu .m-dd-sub.open{display:block}
 .mobile-menu .m-dd-sub a{padding-left:44px;color:var(--fg)}
 
+/* ===== QC EVENTS & ENTERTAINMENT (additive; hidden unless html.qc-events-on) ===== */
+.qc-ev-link,#events{display:none}
+html.qc-events-on .nav-links .qc-ev-link{display:inline-block;max-width:210px;line-height:1.2;text-align:center;font-size:.72rem;letter-spacing:.02em;padding:6px 8px}
+html.qc-events-on .mobile-menu .qc-ev-link{display:block}
+html.qc-events-on #events{display:block}
+#events{--ev-ink:#14090f;--ev-wine:#4a1230;--ev-paper:#f4e9d6;--ev-line:#c9b38a;position:relative;overflow:hidden;color:var(--fg);padding:88px 0 72px;background:radial-gradient(900px 420px at 50% -8%,rgba(232,184,106,.30),transparent 65%),linear-gradient(180deg,var(--ev-wine) 0%,var(--ev-ink) 70%)}
+#events::before{content:"";position:absolute;inset:0;pointer-events:none;background:conic-gradient(from 200deg at 50% -10%,transparent 0 6%,rgba(255,226,170,.10) 8% 10%,transparent 12% 20%,rgba(255,226,170,.07) 22% 24%,transparent 26% 74%,rgba(255,226,170,.07) 76% 78%,transparent 80% 88%,rgba(255,226,170,.10) 90% 92%,transparent 94%)}
+#events .container{position:relative;z-index:1}
+#events .ev-brand{font-family:var(--font-display);font-size:1rem;letter-spacing:.32em;color:var(--primary);text-align:center}
+#events h2{font-family:var(--font-display);font-weight:700;text-align:center;font-size:clamp(2.1rem,6vw,4.4rem);line-height:1.05;margin:10px 0 14px;letter-spacing:.01em}
+#events .ev-tag{text-align:center;font-size:1.05rem;color:hsl(40,30%,82%);margin-bottom:36px}
+.ev-ticket{display:grid;grid-template-columns:1fr auto;max-width:980px;margin:0 auto;background:var(--ev-paper);color:#2a1a12;border-radius:14px;position:relative;box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}
+.ev-ticket::before,.ev-ticket::after{content:"";position:absolute;right:178px;width:26px;height:26px;border-radius:50%;background:var(--ev-ink);left:auto}
+.ev-ticket::before{top:-13px}.ev-ticket::after{bottom:-13px}
+.ev-fields{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:0;padding:18px 8px 18px 14px}
+.ev-fields label{display:block;padding:4px 14px;border-right:1px solid var(--ev-line);font-size:.72rem;font-weight:600;color:#7a5b3a}
+.ev-fields label:last-child{border-right:0}
+.ev-fields input,.ev-fields select{display:block;width:100%;margin-top:4px;padding:6px 0;border:0;border-bottom:1px solid transparent;border-radius:0;background:transparent;color:#2a1a12;font:600 .95rem var(--font-body)}
+.ev-fields input:focus,.ev-fields select:focus{outline:2px solid #4a1230;outline-offset:2px}
+.ev-stub{width:178px;border-left:2px dashed var(--ev-line);display:grid;place-items:center;padding:14px}
+.ev-stub button{width:100%;padding:14px 10px;border:0;border-radius:8px;background:var(--ev-wine);color:#fff;font:700 .95rem var(--font-body);cursor:pointer}
+.ev-stub button:hover{background:#5d1a3d}
+.ev-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:30px 0 8px}
+.ev-cta .btn-gold{padding:14px 28px;font-size:.95rem}
+.ev-cta .ev-ghost{display:inline-block;padding:13px 28px;border:1px solid var(--primary);border-radius:6px;color:var(--primary);font-weight:600;font-size:.95rem}
+.ev-cta .ev-ghost:hover{background:rgba(232,184,106,.12)}
+.ev-cats{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:34px auto 0;max-width:900px}
+.ev-cats a{padding:8px 16px;border:1px solid rgba(232,184,106,.35);border-radius:999px;font-size:.85rem;color:hsl(40,30%,88%)}
+.ev-cats a:hover{background:var(--primary);color:var(--primary-fg)}
+.ev-rows{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:52px}
+.ev-rows h3{font-size:1.25rem;margin-bottom:14px}
+.ev-list{display:grid;gap:12px}
+.ev-item{display:flex;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid rgba(232,184,106,.25);border-radius:10px;background:rgba(0,0,0,.25)}
+.ev-item strong{display:block;font-size:.95rem}.ev-item small{color:var(--muted)}
+.ev-empty{padding:18px;border:1px dashed rgba(232,184,106,.35);border-radius:10px;color:hsl(40,20%,75%);font-size:.9rem}
+.ev-empty a{color:var(--primary);text-decoration:underline}
+@media(max-width:860px){.ev-ticket{grid-template-columns:1fr}.ev-ticket::before,.ev-ticket::after{display:none}.ev-fields{grid-template-columns:1fr 1fr;gap:10px 0}.ev-fields label:nth-child(2n){border-right:0}.ev-stub{width:auto;border-left:0;border-top:2px dashed var(--ev-line)}.ev-rows{grid-template-columns:1fr}}
+@media(max-width:520px){.ev-fields{grid-template-columns:1fr}.ev-fields label{border-right:0;border-bottom:1px solid var(--ev-line);padding:8px 6px}.ev-fields label:last-child{border-bottom:0}}
 /* ===== HERO: "BUILDING AI PRODUCTS" SLIDE ===== */
 .ai-bg{position:absolute;inset:0;background:radial-gradient(900px 520px at 78% 38%,rgba(39,200,255,.16),transparent 62%),radial-gradient(700px 480px at 25% 92%,hsl(36,40%,62%,.13),transparent 60%),linear-gradient(120deg,#04060c 0%,#080d18 55%,#0a1424 100%)}
 .ai-bg::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(88,220,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(88,220,255,.05) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse at 70% 45%,#000 15%,transparent 72%);mask-image:radial-gradient(ellipse at 70% 45%,#000 15%,transparent 72%)}
@@ -407,14 +439,14 @@ footer{background:var(--secondary);border-top:1px solid var(--border);padding:64
 <span class="text-gradient-gold">Queen Captivated</span>
 </a>
 <div class="nav-links">
-<a href="#home">Home</a><div class="nav-dd"><button type="button" class="nav-dd-btn" aria-haspopup="true" aria-expanded="false">Products <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 3.5L5 7l3.5-3.5"/></svg></button><div class="nav-dd-menu" role="menu"><a class="nav-dd-item" role="menuitem" href="ai-products.html"><span class="nav-dd-ico" aria-hidden="true">✦</span><span><strong>AI Product</strong><small>Intelligent products, agents &amp; automation</small></span></a></div></div><a href="#about">About</a><a href="#services">Services</a>
+<a href="#home">Home</a><div class="nav-dd"><button type="button" class="nav-dd-btn" aria-haspopup="true" aria-expanded="false">Products <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 3.5L5 7l3.5-3.5"/></svg></button><div class="nav-dd-menu" role="menu"><a class="nav-dd-item" role="menuitem" href="ai-products.html"><span class="nav-dd-ico" aria-hidden="true">✦</span><span><strong>AI Product</strong><small>Intelligent products, agents &amp; automation</small></span></a></div></div><a href="#events" class="qc-ev-link">EVENT MANAGEMENT &amp; ENTERTAINMENT MARKETPLACE</a><a href="#about">About</a><a href="#services">Services</a>
 <a href="#industries">Industries</a><a href="#why-us">Why Us</a><a href="#testimonials">Testimonials</a>
 <a href="#faq">FAQ</a><a href="#contact">Contact</a>
 </div>
 <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
 </div>
 <div class="mobile-menu" id="mobileMenu">
-<a href="#home" onclick="closeMenu()">Home</a><button type="button" class="m-dd-btn" aria-expanded="false" onclick="toggleMobileProducts(this)">Products <span aria-hidden="true">▾</span></button><div class="m-dd-sub"><a href="ai-products.html" onclick="closeMenu()">AI Product</a></div><a href="#about" onclick="closeMenu()">About</a>
+<a href="#home" onclick="closeMenu()">Home</a><button type="button" class="m-dd-btn" aria-expanded="false" onclick="toggleMobileProducts(this)">Products <span aria-hidden="true">▾</span></button><div class="m-dd-sub"><a href="ai-products.html" onclick="closeMenu()">AI Product</a></div><a href="#events" class="qc-ev-link" onclick="closeMenu()">EVENT MANAGEMENT &amp; ENTERTAINMENT MARKETPLACE</a><a href="#about" onclick="closeMenu()">About</a>
 <a href="#services" onclick="closeMenu()">Services</a><a href="#industries" onclick="closeMenu()">Industries</a>
 <a href="#why-us" onclick="closeMenu()">Why Us</a><a href="#testimonials" onclick="closeMenu()">Testimonials</a>
 <a href="#faq" onclick="closeMenu()">FAQ</a><a href="#contact" onclick="closeMenu()">Contact</a>
@@ -597,6 +629,35 @@ footer{background:var(--secondary);border-top:1px solid var(--border);padding:64
 </div>
 </section>
 
+<!-- QC EVENTS & ENTERTAINMENT (new, independent of the hero above) -->
+<section id="events" aria-labelledby="evTitle">
+<div class="container">
+<div class="ev-brand">QUEEN CAPTIVATED</div>
+<h2 id="evTitle">EVENTS &amp; ENTERTAINMENT</h2>
+<p class="ev-tag">Discover Events. Book Experiences. Create Memories.</p>
+<form class="ev-ticket" action="events/explore" method="get" role="search" aria-label="Search events">
+<div class="ev-fields">
+<label>Event name<input type="search" name="q" placeholder="Concert, festival, workshop"></label>
+<label>Category<select name="category"><option value="">All categories</option><option value="music-concerts">Music concerts</option><option value="cultural-festivals">Cultural festivals</option><option value="traditional-festivals">Traditional festivals</option><option value="dance">Dance programmes</option><option value="sports">Sports events</option><option value="running">Running events</option><option value="conferences">Conferences</option><option value="corporate">Corporate events</option><option value="weddings">Weddings</option><option value="birthdays">Birthday celebrations</option><option value="parties">Parties</option><option value="educational">Educational events</option><option value="entertainment">Entertainment programmes</option><option value="community">Community events</option></select></label>
+<label>Date<input type="date" name="date"></label>
+<label>Location<input type="text" name="city" placeholder="City or town"></label>
+</div>
+<div class="ev-stub"><button type="submit">Search events</button></div>
+</form>
+<div class="ev-cta"><a class="btn-gold" href="events/explore">Explore Events</a><a class="ev-ghost" href="events/publish">Publish Your Event</a></div>
+<nav class="ev-cats" aria-label="Popular event categories"><a href="events/explore?category=music-concerts">Music concerts</a><a href="events/explore?category=cultural-festivals">Cultural festivals</a><a href="events/explore?category=dance">Dance</a><a href="events/explore?category=sports">Sports</a><a href="events/explore?category=weddings">Weddings</a><a href="events/explore?category=corporate">Corporate</a><a href="events/explore?category=parties">Parties</a><a href="events/explore?category=community">Community</a></nav>
+<div class="ev-rows">
+<div><h3>Featured events</h3><div class="ev-list" id="qcEvFeat"><div class="ev-empty">No featured events yet. <a href="events/publish">Publish yours</a> and it can appear here.</div></div></div>
+<div><h3>Upcoming events</h3><div class="ev-list" id="qcEvUp"><div class="ev-empty">Upcoming events will be listed here once organisers publish them.</div></div></div>
+</div>
+</div>
+<script>(function(){var api=(document.querySelector('meta[name="qc-events-api"]')||{}).content||"";if(!api)return;
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function row(e){return '<a class="ev-item" href="events/event/'+encodeURIComponent(e.slug)+'"><span><strong>'+esc(e.title)+'</strong><small>'+esc(e.city||"")+'</small></span><small>'+esc(new Date(e.starts_at).toLocaleDateString("en-IN",{day:"numeric",month:"short"}))+'</small></a>'}
+function load(id,qs){fetch(api.replace(/\/+$/,"")+"/api/events/public?"+qs).then(function(r){return r.ok?r.json():null}).then(function(d){if(d&&d.events&&d.events.length)document.getElementById(id).innerHTML=d.events.slice(0,4).map(row).join("")}).catch(function(){})}
+load("qcEvFeat","featured=1");load("qcEvUp","upcoming=1")})();</script>
+</section>
+
 <!-- ABOUT -->
 <section id="about" class="section-bg">
 <div class="container">
@@ -772,16 +833,12 @@ footer{background:var(--secondary);border-top:1px solid var(--border);padding:64
 <span class="text-gradient-gold" style="font-family:var(--font-display);font-weight:700;font-size:1.125rem">Queen Captivated</span>
 </div>
 <p>Premium consulting services empowering entrepreneurs and businesses in Manipur and Northeast India.</p>
-<!-- Social links: replace each href with your own page address -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FEDA75"/><stop offset="25%" stop-color="#FA7E1E"/><stop offset="50%" stop-color="#D62976"/><stop offset="75%" stop-color="#962FBF"/><stop offset="100%" stop-color="#4F5BD5"/></linearGradient></defs></svg>
-
-<div class="social"><a class="fb" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer me" aria-label="Queen Captivated on Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.9v3h2.6V21h3z"/></svg></a><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer me" aria-label="Queen Captivated on Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.4A4.6 4.6 0 1 0 12 16.6 4.6 4.6 0 0 0 12 7.4zm0 7.6a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm5.8-7.8a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM21 8.1c-.1-1.4-.4-2.6-1.4-3.6S17.3 3.1 15.9 3C14.5 2.9 9.5 2.9 8.1 3 6.7 3.1 5.5 3.4 4.5 4.4S3.1 6.7 3 8.1C2.9 9.5 2.9 14.5 3 15.9c.1 1.4.4 2.6 1.4 3.6s2.2 1.3 3.6 1.4c1.4.1 6.4.1 7.8 0 1.4-.1 2.6-.4 3.6-1.4s1.3-2.2 1.4-3.6c.1-1.4.1-6.4 0-7.8zm-2 9.6a3 3 0 0 1-1.7 1.7c-1.2.5-4 .4-5.3.4s-4.100.1-5.300-.4a3 3 0 0 1-1.700-1.700c-.5-1.200-.4-4-.4-5.300s-.1-4.100.4-5.300a3 3 0 0 1 1.700-1.700c1.200-.5 4-.4 5.300-.4s4.100-.1 5.300.4a3 3 0 0 1 1.700 1.700c.5 1.200.4 4 .4 5.300s.1 4.100-.4 5.300z"/></svg></a><a class="li" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer me" aria-label="Queen Captivated on LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.9 8.8H3.6V20h3.3V8.8zM5.300 3.500a1.900 1.900 0 1 0 0 3.800 1.900 1.900 0 0 0 0-3.800zM20.400 13.600c0-3.100-1.700-4.900-4.100-4.900-1.600 0-2.500.9-2.900 1.500V8.800h-3.300c0 .9 0 11.200 0 11.200h3.300v-6.200c0-.3 0-.7.100-.9.300-.7.900-1.400 1.900-1.400 1.300 0 1.800 1 1.800 2.500V20h3.300v-6.400z"/></svg></a><a class="tw" href="https://x.com/" target="_blank" rel="noopener noreferrer me" aria-label="Queen Captivated on X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.700 3.500h3l-6.600 7.500L21.900 20.500h-6.100l-4.800-6.200-5.500 6.200h-3l7.100-8L2.400 3.500h6.200l4.300 5.700 4.800-5.700zm-1.100 15.200h1.700L7.800 5.200H6L16.600 18.700z"/></svg></a></div>
 </div>
 <div><h4>Quick Links</h4><ul><li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#industries">Industries</a></li><li><a href="#contact">Contact</a></li><li><a href="car-rental">Car Rental</a></li><li><a href="homestay">Homestay</a></li><li><a href="ai-products.html">AI Products</a></li></ul></div>
 <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="disclaimer.html">Disclaimer</a></li><li><a href="cookies.html">Cookie Policy</a></li></ul></div>
 <div><h4>Contact</h4><address style="font-style:normal"><p><a href="mailto:executive@queencaptivated.in">executive@queencaptivated.in</a></p><p><a href="mailto:queencaptivated@gmail.com">queencaptivated@gmail.com</a></p><p><a href="tel:+913870265003">03870 265003</a></p><p>Alungtang, Ukhrul P.O., Ukhrul District, Manipur - 795142</p></address></div>
 </div>
-<p style="font-size:.85rem;color:var(--muted);max-width:900px;margin:28px auto 18px;text-align:center;line-height:1.7">Queen Captivated is a reliable company in Ukhrul town, Manipur, offering business consulting, <a href="car-rental" style="text-decoration:underline">car rental and vehicle hire in Ukhrul</a>, and <a href="homestay" style="text-decoration:underline">homestay accommodation and lodging in Ukhrul</a>.</p>
+<p style="font-size:.85rem;color:var(--muted);max-width:900px;margin:0 auto 18px;text-align:center;line-height:1.7">Queen Captivated is a reliable company in Ukhrul town, Manipur, offering business consulting, <a href="car-rental" style="text-decoration:underline">car rental and vehicle hire in Ukhrul</a>, and <a href="homestay" style="text-decoration:underline">homestay accommodation and lodging in Ukhrul</a>.</p>
 <div class="footer-bottom">&copy; <script>document.write(new Date().getFullYear())</script> Queen Captivated. All rights reserved.</div>
 </div>
 </footer>
