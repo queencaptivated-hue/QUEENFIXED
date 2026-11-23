@@ -15,6 +15,10 @@
     {
       "source": "/homestay",
       "destination": "/homestay/index.html"
+    },
+    {
+      "source": "/events/(.*)",
+      "destination": "/events/index.html"
     }
   ],
   "headers": [
