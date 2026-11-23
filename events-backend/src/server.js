@@ -4,13 +4,17 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
-import { q } from "./db.js";
+import { q, qRead } from "./db.js";
 import checkout from "./routes/checkout.js";
 import paymentAdmin from "./routes/paymentAdmin.js";
 import webhooks from "./routes/webhooks.js";
+import auth from "./routes/auth.js";
+import organiser from "./routes/organiser.js";
+import adminEvents from "./routes/adminEvents.js";
+import publicEvents from "./routes/publicEvents.js";
 import { expireHolds } from "./services/fulfil.js";
 
-for (const k of ["DATABASE_URL", "EVENTS_JWT_SECRET", "TICKET_QR_SECRET"]) {
+for (const k of ["DATABASE_URL", "EVENTS_JWT_SECRET", "TICKET_QR_SECRET", "BANK_ENC_KEY", "API_PUBLIC_URL"]) {
   if (!process.env[k]) { console.error(`Missing required env var ${k}`); process.exit(1); } // fail loudly, never run with weak defaults
 }
 const app = express();
@@ -24,12 +28,17 @@ app.use(morgan("combined"));
 app.use("/api/events/webhooks", express.raw({ type: "*/*", limit: "1mb" }), webhooks);
 app.use(express.json({ limit: "100kb" }));
 app.use("/api/events", rateLimit({ windowMs: 60_000, limit: 120, standardHeaders: true, legacyHeaders: false }));
+app.use("/api/events/auth/otp", rateLimit({ windowMs: 15 * 60_000, limit: Number(process.env.OTP_IP_LIMIT || 100), standardHeaders: true, legacyHeaders: false }));  // per IP; each email/number is also capped at 5 codes/hour
 app.use("/api/events/bookings/:id/pay", rateLimit({ windowMs: 60_000, limit: 10 }));
 app.use("/api/events/bookings/:id/upi-claim", rateLimit({ windowMs: 60_000, limit: 5 }));
 
 app.get("/api/health", async (_req, res) => {
-  try { await q("SELECT 1"); res.json({ ok: true, service: "events" }); } catch { res.status(503).json({ ok: false }); }
+  try { await q("SELECT 1"); await qRead("SELECT 1"); res.json({ ok: true, service: "events" }); } catch { res.status(503).json({ ok: false }); }
 });
+app.use("/api/events", auth);
+app.use("/api/events", publicEvents);
+app.use("/api/events", organiser);
+app.use("/api/events", adminEvents);
 app.use("/api/events", checkout);
 app.use("/api/events", paymentAdmin);
 app.use("/api", (_req, res) => res.status(404).json({ error: "Route not found." }));

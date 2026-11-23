@@ -1,6 +1,10 @@
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import sharp from "sharp";
 import crypto from "crypto";
+import { Readable } from "stream";
+
+// Test-only in-memory driver. Refused in production so no permanent data can ever land on local disk/RAM.
+const MEM = process.env.STORAGE_DRIVER === "memory" && process.env.NODE_ENV !== "production" ? new Map() : null;
 
 const s3 = new S3Client({
   region: "auto",
@@ -24,9 +28,22 @@ export async function putImage(buf, prefix, { maxWidth = 1600, lossless = false 
   const ext = lossless ? "png" : "webp"; // QR codes stay lossless so they remain scannable
   const out = await (lossless ? img.png() : img.webp({ quality: 85 })).toBuffer();
   const Key = `${prefix}/${crypto.randomUUID()}.${ext}`;
+  if (MEM) { MEM.set(Key, { Body: out, ContentType: `image/${ext}` }); return Key; }
   await s3.send(new PutObjectCommand({ Bucket, Key, Body: out, ContentType: `image/${ext}`, CacheControl: "private, max-age=3600" }));
   return Key;
 }
 export async function getObject(Key) {
+  if (MEM) { const o = MEM.get(Key); if (!o) throw Object.assign(new Error("Not found"), { status: 404 }); return { Body: Readable.from(o.Body), ContentType: o.ContentType }; }
   return s3.send(new GetObjectCommand({ Bucket, Key }));
+}
+
+// Identity documents: images are re-encoded, PDFs are stored as-is after a magic-byte check. Always private.
+export async function putDocument(buf, prefix) {
+  if (buf.length > 12 && buf.slice(0, 5).toString() === "%PDF-") {
+    const Key = `${prefix}/${crypto.randomUUID()}.pdf`;
+    if (MEM) MEM.set(Key, { Body: buf, ContentType: "application/pdf" });
+    else await s3.send(new PutObjectCommand({ Bucket, Key, Body: buf, ContentType: "application/pdf", CacheControl: "private, no-store" }));
+    return Key;
+  }
+  return putImage(buf, prefix, { maxWidth: 2200 });
 }
