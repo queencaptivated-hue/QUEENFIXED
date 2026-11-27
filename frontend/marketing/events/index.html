@@ -9,6 +9,7 @@
      When your events service is online on Render, paste its address between the quotes, e.g. https://queen-captivated-events-api.onrender.com -->
 <meta name="qc-events-api" content="">
 <script src="/events-config.js"></script>
+<script src="/events/stage.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -38,6 +39,7 @@ input,select{width:100%;padding:11px 12px;border-radius:8px;border:1px solid var
 </style>
 </head>
 <body>
+<div data-qc-stage data-fixed></div>
 <header><a class="logo" href="/">Queen Captivated</a>
 <nav><a data-r href="/events/explore">Explore events</a><a data-r href="/events/my-tickets">My tickets</a><a data-r href="/events/publish">Publish your event</a><span id="who"></span></nav></header>
 <main id="app"></main><div id="modal"></div>
