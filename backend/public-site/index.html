@@ -132,7 +132,8 @@
 }
 </script>
 <meta name="qc-events" content="off"><meta name="qc-events-api" content="">
-<script>(function(){var m=document.querySelector('meta[name="qc-events"]');if((m&&m.content==="on")||/[?&]events=preview/.test(location.search))document.documentElement.classList.add("qc-events-on")})();</script>
+<script src="/events-config.js"></script>
+<script>(function(){var c=window.QC_EVENTS||{},m=document.querySelector('meta[name="qc-events"]');if(c.on===true||(m&&m.content==="on")||/[?&]events=preview/.test(location.search))document.documentElement.classList.add("qc-events-on"),document.write('<script src="/events/stage.js" defer><\/script>')})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -640,7 +641,7 @@ html.qc-events-on .qc-ev-dd .nav-dd-btn{white-space:normal;text-align:left;width
 </section>
 
 <!-- QC EVENTS & ENTERTAINMENT (new, independent of the hero above) -->
-<section id="events" aria-labelledby="evTitle">
+<section id="events" aria-labelledby="evTitle" data-qc-stage>
 <script>(function(){var dd=document.querySelector('.qc-ev-dd');if(!dd)return;var btn=dd.querySelector('.nav-dd-btn');
 function set(o){dd.classList.toggle('open',o);btn.setAttribute('aria-expanded',o?'true':'false')}
 btn.addEventListener('click',function(e){e.stopPropagation();set(!dd.classList.contains('open'))});
@@ -667,7 +668,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)})
 <div><h3>Upcoming events</h3><div class="ev-list" id="qcEvUp"><div class="ev-empty">Upcoming events will be listed here once organisers publish them.</div></div></div>
 </div>
 </div>
-<script>(function(){var api=(document.querySelector('meta[name="qc-events-api"]')||{}).content||"";if(!api)return;
+<script>(function(){var api=(window.QC_EVENTS&&window.QC_EVENTS.api)||(document.querySelector('meta[name="qc-events-api"]')||{}).content||"";if(!api)return;
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function row(e){return '<a class="ev-item" href="events/event/'+encodeURIComponent(e.slug)+'"><span><strong>'+esc(e.title)+'</strong><small>'+esc(e.city||"")+'</small></span><small>'+esc(new Date(e.starts_at).toLocaleDateString("en-IN",{day:"numeric",month:"short"}))+'</small></a>'}
 function load(id,qs){fetch(api.replace(/\/+$/,"")+"/api/events/public?"+qs).then(function(r){return r.ok?r.json():null}).then(function(d){if(d&&d.events&&d.events.length)document.getElementById(id).innerHTML=d.events.slice(0,4).map(row).join("")}).catch(function(){})}

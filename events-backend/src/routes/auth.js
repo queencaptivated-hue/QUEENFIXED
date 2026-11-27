@@ -65,7 +65,7 @@ r.get("/me", requireAuth, async (req, res) => {
   const { rows: [p] } = await q(`SELECT id, full_name, email, mobile FROM profiles WHERE id=$1 AND is_active`, [req.user.sub]);
   if (!p) return res.status(401).json({ error: "Account not found." });
   const { rows: roles } = await q(`SELECT r.code FROM profile_roles pr JOIN roles r ON r.id=pr.role_id WHERE pr.profile_id=$1`, [p.id]);
-  const { rows: [org] } = await q(`SELECT id, status, org_name FROM organisers WHERE profile_id=$1`, [p.id]);
+  const { rows: [org] } = await q(`SELECT id, status, org_name, review_note FROM organisers WHERE profile_id=$1`, [p.id]);
   res.json({ profile: p, roles: roles.map((x) => x.code), organiser: org || null });
 });
 
